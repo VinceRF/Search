@@ -51,4 +51,16 @@ public class WordController {
     public ResponseEntity favoriteWord(@PathVariable Long id){
         return wordService.favoriteWord(id);
     }
+
+    // 용어 뜻으로 용어 검색
+    @GetMapping("/api/search/content")
+    public List<WordResponseDto> searchByContent(@RequestBody WordRequestDto requestDto){
+        return wordService.searchByContent(requestDto);
+    }
+
+    // 용어 이름으로 용어 검색
+    @GetMapping("/api/search/name")
+    public List<WordResponseDto> searchByName(@RequestBody WordRequestDto requestDto){
+        return wordService.searchByName(requestDto);
+    }
 }

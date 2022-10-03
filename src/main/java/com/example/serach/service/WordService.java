@@ -4,6 +4,7 @@ import com.example.serach.dto.WordRequestDto;
 import com.example.serach.dto.WordResponseDto;
 import com.example.serach.model.Word;
 import com.example.serach.repository.WordRepository;
+import com.example.serach.repository.WordRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import java.util.List;
 public class WordService {
 
     private final WordRepository wordRepository;
+
+    private final WordRepositoryCustom wordRepositoryCustom;
 
     // 용어 등록
     @Transactional
@@ -84,6 +87,28 @@ public class WordService {
         wordRepository.delete(word);
 
         return ResponseEntity.ok("용어 삭제 완료");
+    }
+
+    // 용어 뜻으로 용어 검색
+    public List<WordResponseDto> searchByContent(WordRequestDto requestDto){
+        List<Word> words = wordRepositoryCustom.getWordList(requestDto.getContent());
+        List<WordResponseDto> responseDtos = new ArrayList<>();
+        for (Word word : words){
+            WordResponseDto wordResponseDto = new WordResponseDto(word);
+            responseDtos.add(wordResponseDto);
+        }
+        return responseDtos;
+    }
+
+    // 용어 이름으로 용어 검색
+    public List<WordResponseDto> searchByName(WordRequestDto requestDto){
+        List<Word> words = wordRepositoryCustom.getWordNameList(requestDto.getName());
+        List<WordResponseDto> responseDtos = new ArrayList<>();
+        for (Word word : words){
+            WordResponseDto wordResponseDto = new WordResponseDto(word);
+            responseDtos.add(wordResponseDto);
+        }
+        return responseDtos;
     }
 
 }

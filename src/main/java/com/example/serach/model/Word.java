@@ -4,7 +4,7 @@ import com.example.serach.dto.WordRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
-
+@Table(name = "word")
 @Entity
 @Getter
 @Setter
